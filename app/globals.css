@@ -348,6 +348,51 @@ a {
   gap: 12px;
 }
 
+/* bento — asymmetric feature grid (one big, others small + a wide one) */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: minmax(152px, auto);
+  gap: 16px;
+}
+.bento .b-hero {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.bento .b-wide {
+  grid-column: span 3;
+}
+
+/* big clickable photo upload tile */
+.tile {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 18px;
+  border: 1.5px dashed rgba(244, 239, 225, 0.22);
+  background: var(--green-deep);
+  cursor: pointer;
+  overflow: hidden;
+  padding: 0;
+  transition: border-color 0.15s ease, transform 0.12s ease;
+}
+.tile:hover {
+  border-color: var(--lime);
+}
+.tile:active {
+  transform: scale(0.99);
+}
+.tile img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (max-width: 900px) {
   .grid-main { grid-template-columns: 1fr; }
 }
@@ -356,6 +401,8 @@ a {
 }
 @media (max-width: 720px) {
   .grid-stats { grid-template-columns: repeat(2, 1fr); }
+  .bento { grid-template-columns: 1fr; }
+  .bento .b-hero, .bento .b-wide { grid-column: auto; grid-row: auto; }
 }
 @media (max-width: 480px) {
   .form-row { grid-template-columns: 1fr; }

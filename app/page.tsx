@@ -299,25 +299,10 @@ export default function Home() {
             )}
           </div>
         </div>
-
-        {/* stats */}
-        <div className="grid-stats" style={{ marginTop: 20 }}>
-          {[
-            { k: "Jobs logged", v: String(stats.jobs) },
-            { k: "Signed off", v: String(stats.verified) },
-            { k: "Bounties paid", v: "$" + fmtUsdc(stats.bounties) },
-            { k: "Endorsed", v: "$" + fmtUsdc(stats.endorsed) },
-          ].map((s) => (
-            <div key={s.k} className="panel" style={{ padding: "18px 20px", minWidth: 0 }}>
-              <div className="num" style={{ fontSize: "clamp(22px, 4.5vw, 30px)", overflowWrap: "anywhere" }}>{s.v}</div>
-              <div className="label" style={{ marginTop: 6 }}>{s.k}</div>
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* log work */}
-      <section id="log" style={{ ...wrap, marginTop: 40 }}>
+      {/* log work — photo-forward, right under the hero */}
+      <section id="log" style={{ ...wrap, marginTop: 26 }}>
         <div className="panel" style={{ padding: "clamp(22px, 3vw, 32px)" }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
             <h2 className="display" style={{ fontSize: "clamp(26px, 3.4vw, 38px)" }}>Log a job</h2>
@@ -331,9 +316,9 @@ export default function Home() {
             </div>
           ) : (
             <>
-              <div className="form-row" style={{ marginBottom: 14 }}>
-                <PhotoField label="Before" uri={beforeUri} setUri={setBeforeUri} uploading={upBefore} inputRef={beforeRef} onPick={(e) => onPick("before", e)} />
-                <PhotoField label="After" uri={afterUri} setUri={setAfterUri} uploading={upAfter} inputRef={afterRef} onPick={(e) => onPick("after", e)} />
+              <div className="form-row" style={{ marginBottom: 16 }}>
+                <PhotoTile label="Before" uri={beforeUri} setUri={setBeforeUri} uploading={upBefore} inputRef={beforeRef} onPick={(e) => onPick("before", e)} />
+                <PhotoTile label="After" uri={afterUri} setUri={setAfterUri} uploading={upAfter} inputRef={afterRef} onPick={(e) => onPick("after", e)} />
               </div>
               <div className="form-row" style={{ marginBottom: 12 }}>
                 <Field label="What did you do?">
@@ -363,6 +348,23 @@ export default function Home() {
         </div>
       </section>
 
+      {/* stats */}
+      <section style={{ ...wrap, marginTop: 30 }}>
+        <div className="grid-stats">
+          {[
+            { k: "Jobs logged", v: String(stats.jobs) },
+            { k: "Signed off", v: String(stats.verified) },
+            { k: "Bounties paid", v: "$" + fmtUsdc(stats.bounties) },
+            { k: "Endorsed", v: "$" + fmtUsdc(stats.endorsed) },
+          ].map((s) => (
+            <div key={s.k} className="panel" style={{ padding: "18px 20px", minWidth: 0 }}>
+              <div className="num" style={{ fontSize: "clamp(22px, 4.5vw, 30px)", overflowWrap: "anywhere" }}>{s.v}</div>
+              <div className="label" style={{ marginTop: 6 }}>{s.k}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* board */}
       <section id="board" style={{ ...wrap, marginTop: 44 }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 20 }}>
@@ -386,23 +388,45 @@ export default function Home() {
         )}
       </section>
 
-      {/* why arc */}
-      <section style={{ ...wrap, marginTop: "clamp(52px, 7vw, 84px)" }}>
-        <h2 className="display" style={{ fontSize: "clamp(26px, 3.8vw, 44px)", maxWidth: 720 }}>
-          Why a machine can pay you here
+      {/* why arc — bento */}
+      <section style={{ ...wrap, marginTop: "clamp(56px, 7vw, 88px)" }}>
+        <h2 className="display" style={{ fontSize: "clamp(26px, 3.8vw, 44px)", maxWidth: 760, marginBottom: 26 }}>
+          Why a machine<br />can pay you here
         </h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginTop: 26 }}>
-          {[
-            ["USDC is the gas", "On Arc the fee is plain dollars — so an agent can hold a wallet, pay sub-cent bounties and never juggle a separate gas token."],
-            ["Paid the instant it's done", "Sign-off settles with sub-second finality. The bounty is in your wallet before you've put the drill away."],
-            ["The agent acts alone", "The Foreman has its own keys and decides on its own — Circle's whole bet is that the next payer is software, not a person."],
-            ["Yours to keep private", "Mark a job unlisted, a nod to Arc's opt-in privacy. Your proof of work, shown on your terms."],
-          ].map(([t, d], i) => (
-            <div key={t} className={i === 0 ? "blob" : "card"} style={{ padding: 22, color: "var(--ink)" }}>
-              <div className="head" style={{ fontSize: 19, marginBottom: 8 }}>{t}</div>
-              <div style={{ fontSize: 14, lineHeight: 1.55, color: i === 0 ? "rgba(12,44,32,0.8)" : "#5a6b60" }}>{d}</div>
+        <div className="bento">
+          <div className="b-hero blob" style={{ padding: "clamp(24px, 3vw, 34px)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 22, color: "var(--ink)" }}>
+            <div className="num" style={{ fontSize: "clamp(40px, 6.5vw, 70px)", lineHeight: 1 }}>
+              ≈ $0.001
+              <span style={{ display: "block", fontSize: 14, fontWeight: 700, opacity: 0.7, letterSpacing: "0.04em", marginTop: 8 }}>PER TRANSACTION, IN USDC</span>
             </div>
-          ))}
+            <div>
+              <div className="head" style={{ fontSize: 23, marginBottom: 8 }}>USDC is the gas</div>
+              <div style={{ fontSize: 14.5, lineHeight: 1.55, color: "rgba(12,44,32,0.82)", maxWidth: 380 }}>
+                Fees are plain dollars on Arc — so an agent can hold its own wallet, pay sub-cent bounties and
+                never juggle a separate gas token.
+              </div>
+            </div>
+          </div>
+
+          <div className="card" style={{ padding: 22, color: "var(--ink)" }}>
+            <div className="head" style={{ fontSize: 18, marginBottom: 7 }}>Paid the instant it&apos;s done</div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "#5a6b60" }}>Sub-second finality — the bounty lands before you&apos;ve packed the drill away.</div>
+          </div>
+
+          <div className="card" style={{ padding: 22, color: "var(--ink)" }}>
+            <div className="head" style={{ fontSize: 18, marginBottom: 7 }}>The agent acts alone</div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "#5a6b60" }}>It holds its own keys and decides on its own — the next payer is software, not a person.</div>
+          </div>
+
+          <div className="b-wide panel" style={{ padding: "22px 24px", display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
+            <div style={{ width: 46, height: 46, borderRadius: 14, background: "rgba(202,249,79,0.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.4" stroke="var(--lime)" strokeWidth="2" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="var(--lime)" strokeWidth="2" /></svg>
+            </div>
+            <div style={{ flex: 1, minWidth: 220 }}>
+              <div className="head" style={{ fontSize: 18, marginBottom: 4 }}>Yours to keep private</div>
+              <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "var(--muted)" }}>Mark a job unlisted — a nod to Arc&apos;s opt-in privacy. Your proof of work, shown on your terms.</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -447,7 +471,7 @@ function Empty({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PhotoField({
+function PhotoTile({
   label,
   uri,
   setUri,
@@ -462,22 +486,24 @@ function PhotoField({
   inputRef: React.RefObject<HTMLInputElement | null>;
   onPick: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
+  const has = looksLikeUrl(uri);
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 7 }}>
-        <span className="label">{label} photo</span>
-        <button type="button" onClick={() => inputRef.current?.click()} disabled={uploading} style={{ background: "none", border: "none", padding: 0, cursor: uploading ? "default" : "pointer", color: uploading ? "var(--muted)" : "var(--lime)", fontFamily: "'Hanken Grotesk',sans-serif", fontSize: 11.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          {uploading ? "Uploading…" : "↑ Upload"}
-        </button>
-        <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: "none" }} />
-      </div>
-      <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-        <input value={uri} onChange={(e) => setUri(e.target.value)} maxLength={400} className="input" placeholder="https://…  or upload ↑" />
-        {looksLikeUrl(uri) && (
+      <button type="button" onClick={() => inputRef.current?.click()} className="tile" aria-label={`Upload ${label} photo`}>
+        {has ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={uri} alt="" onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = "hidden")} style={{ width: 44, height: 44, objectFit: "cover", borderRadius: 10, flexShrink: 0 }} />
+          <img src={uri} alt="" onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = "hidden")} />
+        ) : (
+          <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 9, color: "var(--muted)", pointerEvents: "none" }}>
+            <span style={{ width: 42, height: 42, borderRadius: 13, background: "rgba(202,249,79,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--lime)", fontSize: 24, fontWeight: 700, lineHeight: 1 }}>+</span>
+            <span style={{ fontSize: 13.5, fontWeight: 600 }}>{uploading ? "Uploading…" : `Add ${label.toLowerCase()} photo`}</span>
+          </span>
         )}
-      </div>
+        <span style={{ position: "absolute", top: 10, left: 10, padding: "3px 10px", borderRadius: 999, background: has ? "rgba(12,44,32,0.66)" : "transparent", color: "var(--cream)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.08em" }}>{label.toUpperCase()}</span>
+        {has && <span style={{ position: "absolute", bottom: 10, right: 10, padding: "4px 11px", borderRadius: 999, background: "rgba(12,44,32,0.7)", color: "var(--cream)", fontSize: 11, fontWeight: 600 }}>Change</span>}
+      </button>
+      <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: "none" }} />
+      <input value={uri} onChange={(e) => setUri(e.target.value)} maxLength={400} className="input" placeholder="…or paste an image URL" style={{ marginTop: 9, fontSize: 13, padding: "10px 13px" }} />
     </div>
   );
 }
