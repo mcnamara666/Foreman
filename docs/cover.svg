@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640" font-family="'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <clipPath id="card"><rect x="0" y="0" width="1280" height="640" rx="0"/></clipPath>
+    <clipPath id="blob"><path d="M70 150 H600 a34 34 0 0 1 34 34 V470 a120 120 0 0 1 -120 120 H104 a34 34 0 0 1 -34 -34 Z"/></clipPath>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+
+  <g clip-path="url(#card)">
+    <rect width="1280" height="640" fill="#0e3a2b"/>
+    <rect width="1280" height="640" filter="url(#grain)" opacity="0.05"/>
+
+    <!-- top bar -->
+    <g transform="translate(64,46)">
+      <rect x="0" y="-4" width="34" height="34" rx="10" fill="#caf94f"/>
+      <path d="M8 13l5 5 12-13" stroke="#0c2c20" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <text x="46" y="22" font-size="27" font-weight="800" fill="#f4efe1">Foreman</text>
+    </g>
+    <g transform="translate(1040,42)">
+      <rect x="0" y="0" width="176" height="34" rx="17" fill="none" stroke="rgba(244,239,225,0.25)"/>
+      <circle cx="20" cy="17" r="4.5" fill="#caf94f"/>
+      <text x="34" y="22" font-size="13" font-weight="600" fill="#9db3a6">ARC Testnet</text>
+    </g>
+
+    <!-- hero lime blob -->
+    <path d="M70 150 H600 a34 34 0 0 1 34 34 V470 a120 120 0 0 1 -120 120 H104 a34 34 0 0 1 -34 -34 Z" fill="#caf94f"/>
+    <g clip-path="url(#blob)">
+      <text x="104" y="262" font-size="62" font-weight="800" fill="#0c2c20" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif">Your work,</text>
+      <text x="104" y="328" font-size="62" font-weight="800" fill="#0c2c20" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif">signed off</text>
+      <text x="104" y="394" font-size="62" font-weight="800" fill="#0c2c20" font-family="'Arial Black','Helvetica Neue',Arial,sans-serif">and paid.</text>
+      <text x="106" y="446" font-size="18" fill="rgba(12,44,32,0.78)">Log a finished job. The Foreman pays the bounty.</text>
+      <g transform="translate(104,476)">
+        <rect x="0" y="0" width="186" height="50" rx="25" fill="#0c2c20"/>
+        <text x="93" y="32" font-size="16" font-weight="700" fill="#f4efe1" text-anchor="middle">Log a job</text>
+      </g>
+    </g>
+
+    <!-- the Foreman agent card -->
+    <g transform="translate(686,168)">
+      <rect x="0" y="0" width="530" height="300" rx="26" fill="#16503a" stroke="rgba(244,239,225,0.13)"/>
+      <g transform="translate(28,28)">
+        <rect x="0" y="0" width="50" height="50" rx="15" fill="#caf94f"/>
+        <g transform="translate(13,11) scale(1.0)"><rect x="0" y="4" width="24" height="17" rx="4" stroke="#0c2c20" stroke-width="2.6" fill="none"/><circle cx="7" cy="13" r="2.1" fill="#0c2c20"/><circle cx="17" cy="13" r="2.1" fill="#0c2c20"/><path d="M12 4V0M7 0h10" stroke="#0c2c20" stroke-width="2.6" stroke-linecap="round"/></g>
+        <text x="66" y="20" font-size="21" font-weight="800" fill="#f4efe1">The Foreman</text>
+        <text x="66" y="41" font-size="13.5" fill="#9db3a6">autonomous agent · its own wallet on Arc</text>
+      </g>
+
+      <g transform="translate(28,108)" font-family="'Segoe UI',Arial,sans-serif">
+        <rect x="0" y="0" width="234" height="64" rx="14" fill="#0a3022"/>
+        <text x="16" y="30" font-size="22" font-weight="800" fill="#f4efe1">$10.00</text>
+        <text x="16" y="50" font-size="11" font-weight="700" letter-spacing="1.6" fill="#9db3a6">IN ITS WALLET</text>
+        <rect x="248" y="0" width="234" height="64" rx="14" fill="#0a3022"/>
+        <text x="264" y="30" font-size="22" font-weight="800" fill="#f4efe1">$0.05</text>
+        <text x="264" y="50" font-size="11" font-weight="700" letter-spacing="1.6" fill="#9db3a6">BOUNTY / JOB · USDC</text>
+      </g>
+
+      <g transform="translate(28,196)">
+        <rect x="0" y="0" width="474" height="50" rx="25" fill="#caf94f"/>
+        <text x="237" y="32" font-size="16" font-weight="700" fill="#0c2c20" text-anchor="middle">Wake the Foreman</text>
+      </g>
+      <text x="28" y="278" font-size="13.5" fill="#9db3a6">It signs off new jobs and pays the builder — no human in the loop.</text>
+    </g>
+
+    <!-- bottom tags -->
+    <g transform="translate(70,612)" font-size="15" font-weight="700" fill="#caf94f">
+      <text x="0" y="0">USDC is the gas<tspan fill="#6f8a7c">     ·     </tspan>Paid the instant it's done<tspan fill="#6f8a7c">     ·     </tspan>The agent acts alone</text>
+    </g>
+  </g>
+</svg>
