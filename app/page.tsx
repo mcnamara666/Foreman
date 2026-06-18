@@ -236,46 +236,52 @@ export default function Home() {
       {!hasContract() && (
         <div style={{ ...wrap, marginTop: 16 }}>
           <div className="panel" style={{ padding: "12px 18px", color: "var(--coral)", fontSize: 13.5 }}>
-            Contract not wired in yet — deploy it from <a href="/deploy" style={{ color: "var(--lime)", fontWeight: 700 }}>/deploy</a> and the crew clocks in.
+            Contract not wired in yet — deploy it from <a href="/deploy" style={{ color: "var(--acc)", fontWeight: 600 }}>/deploy</a> and the node comes online.
           </div>
         </div>
       )}
 
-      {/* hero */}
-      <section style={{ ...wrap, paddingTop: "clamp(28px, 4vw, 48px)" }}>
+      {/* hero — system operations */}
+      <section style={{ ...wrap, paddingTop: "clamp(34px, 5vw, 64px)" }}>
         <div className="grid-main rise">
-          <div className="blob blob--hero" style={{ padding: "clamp(28px, 4vw, 46px)" }}>
-            <span className="chip chip--ink" style={{ marginBottom: 20 }}>
-              <span className="dot live" style={{ background: "var(--ink)" }} /> Agentic payments · ARC Testnet
+          <div className="blob blob--hero" style={{ padding: "clamp(30px, 4vw, 48px)" }}>
+            <span className="label" style={{ display: "inline-flex", alignItems: "center", gap: 8, marginBottom: 26 }}>
+              <span className="dot live" style={{ background: "var(--acc)" }} /> SYSTEM&nbsp;OPERATIONS&nbsp;·&nbsp;ARC&nbsp;TESTNET
             </span>
-            <h1 className="display" style={{ fontSize: "clamp(40px, 6vw, 76px)", color: "var(--ink)" }}>
-              Your work,<br />signed off<br />and paid.
+            <h1 className="display" style={{ fontSize: "clamp(40px, 6.2vw, 80px)" }}>
+              Your work,<br />
+              <span style={{ color: "var(--muted)" }}>signed off</span><br />
+              and paid.
             </h1>
-            <p style={{ fontSize: 17.5, color: "rgba(12,44,32,0.78)", maxWidth: 440, lineHeight: 1.5, marginTop: 22, fontWeight: 500 }}>
-              Log a finished job with before/after photos. An autonomous Foreman on Arc reviews it, signs it
-              off, and pays you a USDC bounty — no human, no invoice, no waiting.
+            <p style={{ fontSize: 16.5, color: "var(--text-soft)", maxWidth: 448, lineHeight: 1.6, marginTop: 24, fontWeight: 400 }}>
+              Log a finished job with before/after telemetry. An autonomous Foreman node on Arc reviews it, signs it
+              off, and pays your USDC bounty — no human, no invoice, no waiting.
             </p>
-            <div style={{ display: "flex", gap: 11, marginTop: 28, flexWrap: "wrap" }}>
-              <a href="#log" className="btn btn--ink btn--lg">Log a job</a>
-              <a href="#foreman" className="btn btn--lg" style={{ borderColor: "rgba(12,44,32,0.28)", color: "var(--ink)" }}>Meet the Foreman</a>
+            <div style={{ display: "flex", gap: 11, marginTop: 30, flexWrap: "wrap" }}>
+              <a href="#log" className="btn btn--lime btn--lg">Log a job</a>
+              <a href="#foreman" className="btn btn--lg">Inspect the agent node</a>
             </div>
           </div>
 
-          {/* the Foreman live card */}
-          <div id="foreman" className="panel" style={{ padding: 26 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 18 }}>
-              <div className="float" style={{ width: 46, height: 46, borderRadius: 14, background: "var(--lime)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <svg width="26" height="26" viewBox="0 0 32 32" fill="none"><rect x="7" y="11" width="18" height="13" rx="3" stroke="var(--ink)" strokeWidth="2.2" /><circle cx="12" cy="17.5" r="1.6" fill="var(--ink)" /><circle cx="20" cy="17.5" r="1.6" fill="var(--ink)" /><path d="M16 11V7M11 7h10" stroke="var(--ink)" strokeWidth="2.2" strokeLinecap="round" /></svg>
+          {/* the Foreman — system node card */}
+          <div id="foreman" className="panel drift" style={{ padding: 24 }}>
+            <div className="label" style={{ marginBottom: 14, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <span>AGENT&nbsp;NODE</span>
+              <span style={{ color: agent.configured ? "var(--acc)" : "var(--muted)" }}>{agent.configured ? "● ONLINE" : "○ OFFLINE"}</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 18 }}>
+              <div className="float" style={{ width: 46, height: 46, borderRadius: 13, background: "var(--acc-tint)", border: "1px solid rgba(62,224,138,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <svg width="24" height="24" viewBox="0 0 32 32" fill="none"><rect x="7" y="11" width="18" height="13" rx="3" stroke="var(--acc)" strokeWidth="2" /><circle cx="12" cy="17.5" r="1.5" fill="var(--acc)" /><circle cx="20" cy="17.5" r="1.5" fill="var(--acc)" /><path d="M16 11V7M11 7h10" stroke="var(--acc)" strokeWidth="2" strokeLinecap="round" /></svg>
               </div>
               <div style={{ flex: 1 }}>
-                <div className="head" style={{ fontSize: 19 }}>The Foreman</div>
-                <div style={{ fontSize: 12.5, color: "var(--muted)", display: "flex", alignItems: "center", gap: 6 }}>
-                  <span className="dot live" style={{ background: "var(--lime)" }} /> autonomous agent · its own wallet on Arc
+                <div className="head" style={{ fontSize: 18 }}>The Foreman</div>
+                <div style={{ fontSize: 12, color: "var(--muted)", display: "flex", alignItems: "center", gap: 6 }}>
+                  <span className="dot live" style={{ background: "var(--acc)" }} /> autonomous · holds its own wallet on Arc
                 </div>
               </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 16 }}>
               <Mini k="In its wallet" v={`$${agent.balance ? fmtUsdc(ethers.parseEther(Number(agent.balance).toFixed(6))) : "—"}`} />
               <Mini k="Bounty / job" v={`$${agent.bounty || "0.05"}`} />
               <Mini k="Jobs signed off" v={String(stats.verified)} />
@@ -283,30 +289,31 @@ export default function Home() {
             </div>
 
             {agent.configured && agent.address && (
-              <a href={`${ARCSCAN}/address/${agent.address}`} target="_blank" rel="noopener noreferrer" className="num" style={{ display: "block", fontSize: 12, color: "var(--muted)", textDecoration: "none", marginBottom: 14 }}>
-                {shortAddr(agent.address, 10, 8)} ↗
+              <a href={`${ARCSCAN}/address/${agent.address}`} target="_blank" rel="noopener noreferrer" className="num" style={{ display: "block", fontSize: 11.5, color: "var(--muted)", textDecoration: "none", marginBottom: 14 }}>
+                NODE_ADDR&nbsp;·&nbsp;{shortAddr(agent.address, 10, 8)} ↗
               </a>
             )}
 
             <button onClick={wakeForeman} disabled={agentBusy} className="btn btn--lime btn--block">
-              {agentBusy ? <><span className="spin" style={{ display: "inline-block", width: 14, height: 14, border: "2px solid var(--ink)", borderTopColor: "transparent", borderRadius: 99 }} /> Working…</> : "Wake the Foreman"}
+              {agentBusy ? <><span className="spin" style={{ display: "inline-block", width: 14, height: 14, border: "2px solid #04130b", borderTopColor: "transparent", borderRadius: 99 }} /> Running…</> : "Wake the Foreman"}
             </button>
             {agentMsg && (
-              <div className="num" style={{ marginTop: 12, fontSize: 12.5, color: agentMsg.startsWith("✓") ? "var(--lime)" : agentMsg.startsWith("✗") || agentMsg.startsWith("⛽") ? "var(--coral)" : "var(--muted)" }}>{agentMsg}</div>
+              <div className="num" style={{ marginTop: 12, fontSize: 12, color: agentMsg.startsWith("✓") ? "var(--acc)" : agentMsg.startsWith("✗") || agentMsg.startsWith("⛽") ? "var(--coral)" : "var(--muted)" }}>{agentMsg}</div>
             )}
             {agent.configured === false && (
-              <div style={{ marginTop: 10, fontSize: 12, color: "var(--muted)" }}>Agent key not set yet — it goes live once configured.</div>
+              <div style={{ marginTop: 10, fontSize: 12, color: "var(--muted)" }}>Agent key not set yet — node goes live once configured.</div>
             )}
           </div>
         </div>
       </section>
 
-      {/* log work — photo-forward, right under the hero */}
-      <section id="log" style={{ ...wrap, marginTop: 26 }}>
-        <div className="panel" style={{ padding: "clamp(22px, 3vw, 32px)" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
-            <h2 className="display" style={{ fontSize: "clamp(26px, 3.4vw, 38px)" }}>Log a job</h2>
-            {account && <span className="num" style={{ fontSize: 13, color: "var(--muted)" }}>You&apos;ve earned ${fmtUsdc(earned)} so far</span>}
+      {/* log work — new job / I/O telemetry capture */}
+      <section id="log" style={{ ...wrap, marginTop: 30 }}>
+        <div className="panel" style={{ padding: "clamp(22px, 3vw, 34px)" }}>
+          <div className="label" style={{ marginBottom: 12 }}>01 — NEW JOB · I/O TELEMETRY</div>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: 8, marginBottom: 22 }}>
+            <h2 className="display" style={{ fontSize: "clamp(26px, 3.4vw, 40px)" }}>Log a job</h2>
+            {account && <span className="num" style={{ fontSize: 12.5, color: "var(--muted)" }}>EARNED&nbsp;·&nbsp;${fmtUsdc(earned)}</span>}
           </div>
 
           {!account ? (
@@ -333,45 +340,47 @@ export default function Home() {
                   <input value={location} onChange={(e) => setLocation(e.target.value)} maxLength={80} className="input" placeholder="Paris 11e" />
                 </Field>
                 <div style={{ display: "flex", alignItems: "flex-end" }}>
-                  <button type="button" onClick={() => setIsPrivate((p) => !p)} className="btn btn--ghost" style={{ height: 49 }}>
-                    <span style={{ width: 16, height: 16, borderRadius: 5, border: "1.5px solid currentColor", background: isPrivate ? "var(--lime)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "var(--ink)", fontSize: 11 }}>{isPrivate ? "✓" : ""}</span>
+                  <button type="button" onClick={() => setIsPrivate((p) => !p)} className="btn btn--ghost" style={{ height: 47 }}>
+                    <span style={{ width: 16, height: 16, borderRadius: 4, border: "1px solid currentColor", background: isPrivate ? "var(--acc)" : "transparent", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#04130b", fontSize: 11 }}>{isPrivate ? "✓" : ""}</span>
                     Keep private (unlisted)
                   </button>
                 </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 14, flexWrap: "wrap" }}>
                 <button onClick={logWork} disabled={activeKey === "log"} className="btn btn--lime btn--lg">{activeKey === "log" ? "Logging…" : "Log it on-chain"}</button>
-                {logMsg && <span className="num" style={{ fontSize: 13, color: logMsg.startsWith("✓") ? "var(--lime)" : logMsg.startsWith("✗") ? "var(--coral)" : "var(--muted)" }}>{logMsg}</span>}
+                {logMsg && <span className="num" style={{ fontSize: 12.5, color: logMsg.startsWith("✓") ? "var(--acc)" : logMsg.startsWith("✗") ? "var(--coral)" : "var(--muted)" }}>{logMsg}</span>}
               </div>
             </>
           )}
         </div>
       </section>
 
-      {/* stats */}
-      <section style={{ ...wrap, marginTop: 30 }}>
+      {/* telemetry — system counters */}
+      <section style={{ ...wrap, marginTop: 34 }}>
+        <div className="label" style={{ marginBottom: 12 }}>02 — SYSTEM TELEMETRY</div>
         <div className="grid-stats">
           {[
             { k: "Jobs logged", v: String(stats.jobs) },
             { k: "Signed off", v: String(stats.verified) },
             { k: "Bounties paid", v: "$" + fmtUsdc(stats.bounties) },
             { k: "Endorsed", v: "$" + fmtUsdc(stats.endorsed) },
-          ].map((s) => (
-            <div key={s.k} className="panel" style={{ padding: "18px 20px", minWidth: 0 }}>
-              <div className="num" style={{ fontSize: "clamp(22px, 4.5vw, 30px)", overflowWrap: "anywhere" }}>{s.v}</div>
-              <div className="label" style={{ marginTop: 6 }}>{s.k}</div>
+          ].map((s, i) => (
+            <div key={s.k} className="panel tick" style={{ padding: "18px 20px", minWidth: 0, animationDelay: `${i * 0.08}s` }}>
+              <div className="num" style={{ fontSize: "clamp(22px, 4.5vw, 30px)", overflowWrap: "anywhere", color: "var(--text)" }}>{s.v}</div>
+              <div className="label" style={{ marginTop: 8 }}>{s.k}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* board */}
-      <section id="board" style={{ ...wrap, marginTop: 44 }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 20 }}>
-          <h2 className="display" style={{ fontSize: "clamp(28px, 3.6vw, 42px)" }}>The board</h2>
+      {/* board — job log */}
+      <section id="board" style={{ ...wrap, marginTop: 52 }}>
+        <div className="label" style={{ marginBottom: 12 }}>03 — JOB LOG</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 22 }}>
+          <h2 className="display" style={{ fontSize: "clamp(28px, 3.6vw, 44px)" }}>The board</h2>
           <div className="seg">
-            <button data-on={tab === "all"} onClick={() => setTab("all")}>All jobs {publicJobs.length || ""}</button>
-            <button data-on={tab === "mine"} onClick={() => setTab("mine")}>Yours {account ? (mine.length || "") : ""}</button>
+            <button data-on={tab === "all"} onClick={() => setTab("all")}>ALL {publicJobs.length || ""}</button>
+            <button data-on={tab === "mine"} onClick={() => setTab("mine")}>YOURS {account ? (mine.length || "") : ""}</button>
           </div>
         </div>
 
@@ -388,55 +397,57 @@ export default function Home() {
         )}
       </section>
 
-      {/* why arc — bento */}
-      <section style={{ ...wrap, marginTop: "clamp(56px, 7vw, 88px)" }}>
-        <h2 className="display" style={{ fontSize: "clamp(26px, 3.8vw, 44px)", maxWidth: 760, marginBottom: 26 }}>
-          Why a machine<br />can pay you here
+      {/* why arc — bento / system rationale */}
+      <section style={{ ...wrap, marginTop: "clamp(60px, 7vw, 96px)" }}>
+        <div className="label" style={{ marginBottom: 14 }}>04 — WHY THE NODE CAN PAY HERE</div>
+        <h2 className="display" style={{ fontSize: "clamp(26px, 3.8vw, 46px)", maxWidth: 760, marginBottom: 28 }}>
+          Why a machine<br /><span style={{ color: "var(--muted)" }}>can pay you here</span>
         </h2>
         <div className="bento">
-          <div className="b-hero blob" style={{ padding: "clamp(24px, 3vw, 34px)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 22, color: "var(--ink)" }}>
-            <div className="num" style={{ fontSize: "clamp(40px, 6.5vw, 70px)", lineHeight: 1 }}>
+          <div className="b-hero blob" style={{ padding: "clamp(24px, 3vw, 36px)", display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 22 }}>
+            <div className="num" style={{ fontSize: "clamp(40px, 6.5vw, 70px)", lineHeight: 1, color: "var(--acc-soft)" }}>
               ≈ $0.001
-              <span style={{ display: "block", fontSize: 14, fontWeight: 700, opacity: 0.7, letterSpacing: "0.04em", marginTop: 8 }}>PER TRANSACTION, IN USDC</span>
+              <span className="label" style={{ display: "block", fontSize: 11, marginTop: 12, color: "var(--text-soft)" }}>PER TRANSACTION, IN USDC</span>
             </div>
             <div>
-              <div className="head" style={{ fontSize: 23, marginBottom: 8 }}>USDC is the gas</div>
-              <div style={{ fontSize: 14.5, lineHeight: 1.55, color: "rgba(12,44,32,0.82)", maxWidth: 380 }}>
+              <div className="head" style={{ fontSize: 22, marginBottom: 8 }}>USDC is the gas</div>
+              <div style={{ fontSize: 14, lineHeight: 1.6, color: "var(--text-soft)", maxWidth: 380 }}>
                 Fees are plain dollars on Arc — so an agent can hold its own wallet, pay sub-cent bounties and
                 never juggle a separate gas token.
               </div>
             </div>
           </div>
 
-          <div className="card" style={{ padding: 22, color: "var(--ink)" }}>
-            <div className="head" style={{ fontSize: 18, marginBottom: 7 }}>Paid the instant it&apos;s done</div>
-            <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "#5a6b60" }}>Sub-second finality — the bounty lands before you&apos;ve packed the drill away.</div>
+          <div className="card" style={{ padding: 22 }}>
+            <div className="head" style={{ fontSize: 17, marginBottom: 8 }}>Paid the instant it&apos;s done</div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>Sub-second finality — the bounty lands before you&apos;ve packed the drill away.</div>
           </div>
 
-          <div className="card" style={{ padding: 22, color: "var(--ink)" }}>
-            <div className="head" style={{ fontSize: 18, marginBottom: 7 }}>The agent acts alone</div>
-            <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "#5a6b60" }}>It holds its own keys and decides on its own — the next payer is software, not a person.</div>
+          <div className="card" style={{ padding: 22 }}>
+            <div className="head" style={{ fontSize: 17, marginBottom: 8 }}>The agent acts alone</div>
+            <div style={{ fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>It holds its own keys and decides on its own — the next payer is software, not a person.</div>
           </div>
 
           <div className="b-wide panel" style={{ padding: "22px 24px", display: "flex", alignItems: "center", gap: 18, flexWrap: "wrap" }}>
-            <div style={{ width: 46, height: 46, borderRadius: 14, background: "rgba(202,249,79,0.14)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.4" stroke="var(--lime)" strokeWidth="2" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="var(--lime)" strokeWidth="2" /></svg>
+            <div style={{ width: 46, height: 46, borderRadius: 13, background: "var(--acc-tint)", border: "1px solid rgba(62,224,138,0.3)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2.4" stroke="var(--acc)" strokeWidth="2" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" stroke="var(--acc)" strokeWidth="2" /></svg>
             </div>
             <div style={{ flex: 1, minWidth: 220 }}>
-              <div className="head" style={{ fontSize: 18, marginBottom: 4 }}>Yours to keep private</div>
-              <div style={{ fontSize: 13.5, lineHeight: 1.5, color: "var(--muted)" }}>Mark a job unlisted — a nod to Arc&apos;s opt-in privacy. Your proof of work, shown on your terms.</div>
+              <div className="head" style={{ fontSize: 17, marginBottom: 4 }}>Yours to keep private</div>
+              <div style={{ fontSize: 13.5, lineHeight: 1.55, color: "var(--muted)" }}>Mark a job unlisted — a nod to Arc&apos;s opt-in privacy. Your proof of work, shown on your terms.</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* footer */}
-      <footer style={{ ...wrap, marginTop: "clamp(48px, 6vw, 72px)" }}>
-        <div style={{ borderTop: "1px solid var(--line)", paddingTop: 24, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
-          <span className="display" style={{ fontSize: 22 }}>Foreman</span>
+      <footer style={{ ...wrap, marginTop: "clamp(52px, 6vw, 80px)" }}>
+        <div className="flowline" style={{ marginBottom: 24 }} />
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 14, flexWrap: "wrap" }}>
+          <span className="display" style={{ fontSize: 20, fontWeight: 600 }}>Foreman</span>
           {hasContract() && (
-            <a href={`${ARCSCAN}/address/${CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="num" style={{ fontSize: 12.5, color: "var(--muted)", textDecoration: "none" }}>
-              Contract {shortAddr(CONTRACT_ADDRESS, 8, 6)} ↗
+            <a href={`${ARCSCAN}/address/${CONTRACT_ADDRESS}`} target="_blank" rel="noopener noreferrer" className="num" style={{ fontSize: 11.5, color: "var(--muted)", textDecoration: "none" }}>
+              CONTRACT&nbsp;·&nbsp;{shortAddr(CONTRACT_ADDRESS, 8, 6)} ↗
             </a>
           )}
         </div>
@@ -456,9 +467,9 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Mini({ k, v }: { k: string; v: string }) {
   return (
-    <div style={{ background: "var(--green-deep)", borderRadius: 14, padding: "12px 14px", minWidth: 0 }}>
-      <div className="num" style={{ fontSize: 19, overflowWrap: "anywhere" }}>{v}</div>
-      <div className="label" style={{ marginTop: 4, fontSize: 9.5 }}>{k}</div>
+    <div className="tick" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid var(--hairline)", borderRadius: 12, padding: "11px 13px", minWidth: 0 }}>
+      <div className="num" style={{ fontSize: 18, overflowWrap: "anywhere", color: "var(--acc-soft)" }}>{v}</div>
+      <div className="label" style={{ marginTop: 5, fontSize: 9 }}>{k}</div>
     </div>
   );
 }
@@ -495,12 +506,12 @@ function PhotoTile({
           <img src={uri} alt="" onError={(e) => ((e.currentTarget as HTMLImageElement).style.visibility = "hidden")} />
         ) : (
           <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 9, color: "var(--muted)", pointerEvents: "none" }}>
-            <span style={{ width: 42, height: 42, borderRadius: 13, background: "rgba(202,249,79,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--lime)", fontSize: 24, fontWeight: 700, lineHeight: 1 }}>+</span>
-            <span style={{ fontSize: 13.5, fontWeight: 600 }}>{uploading ? "Uploading…" : `Add ${label.toLowerCase()} photo`}</span>
+            <span style={{ width: 42, height: 42, borderRadius: 12, background: "var(--acc-tint)", border: "1px solid rgba(62,224,138,0.3)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--acc)", fontSize: 22, fontWeight: 400, lineHeight: 1 }}>+</span>
+            <span style={{ fontSize: 13, fontWeight: 400 }}>{uploading ? "Uploading…" : `Add ${label.toLowerCase()} photo`}</span>
           </span>
         )}
-        <span style={{ position: "absolute", top: 10, left: 10, padding: "3px 10px", borderRadius: 999, background: has ? "rgba(12,44,32,0.66)" : "transparent", color: "var(--cream)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.08em" }}>{label.toUpperCase()}</span>
-        {has && <span style={{ position: "absolute", bottom: 10, right: 10, padding: "4px 11px", borderRadius: 999, background: "rgba(12,44,32,0.7)", color: "var(--cream)", fontSize: 11, fontWeight: 600 }}>Change</span>}
+        <span className="label" style={{ position: "absolute", top: 10, left: 10, padding: "3px 9px", borderRadius: 7, background: has ? "rgba(7,9,12,0.72)" : "rgba(7,9,12,0.5)", color: "var(--text)", fontSize: 9.5 }}>{label.toUpperCase()}</span>
+        {has && <span style={{ position: "absolute", bottom: 10, right: 10, padding: "4px 10px", borderRadius: 7, background: "rgba(7,9,12,0.78)", color: "var(--text)", fontSize: 11, fontWeight: 400 }}>Change</span>}
       </button>
       <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: "none" }} />
       <input value={uri} onChange={(e) => setUri(e.target.value)} maxLength={400} className="input" placeholder="…or paste an image URL" style={{ marginTop: 9, fontSize: 13, padding: "10px 13px" }} />

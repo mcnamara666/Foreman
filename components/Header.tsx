@@ -34,17 +34,17 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "rgba(14, 58, 43, 0.82)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
-        borderBottom: "1px solid var(--line)",
+        background: "rgba(7, 9, 12, 0.62)",
+        backdropFilter: "blur(18px) saturate(130%)",
+        WebkitBackdropFilter: "blur(18px) saturate(130%)",
+        borderBottom: "1px solid var(--hairline)",
       }}
     >
       <div
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "14px 24px",
+          padding: "13px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -53,14 +53,15 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
         }}
       >
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
-          <Logo size={30} />
-          <span className="display" style={{ fontSize: 23, fontWeight: 900 }}>Foreman</span>
+          <Logo size={28} />
+          <span className="display" style={{ fontSize: 21, fontWeight: 600, letterSpacing: "-0.02em" }}>Foreman</span>
+          <span className="label hdr-nav" style={{ fontSize: 9, marginLeft: 4, paddingLeft: 11, borderLeft: "1px solid var(--hairline)" }}>SYSTEM&nbsp;OPS</span>
         </Link>
 
-        <nav style={{ display: "flex", alignItems: "center", gap: 26 }} className="hdr-nav">
-          <a href="#board" style={{ textDecoration: "none", color: "var(--cream)", fontWeight: 600, fontSize: 15 }}>The board</a>
-          <a href="#log" style={{ textDecoration: "none", color: "var(--cream)", fontWeight: 600, fontSize: 15 }}>Log work</a>
-          <a href="#foreman" style={{ textDecoration: "none", color: "var(--cream)", fontWeight: 600, fontSize: 15 }}>The Foreman</a>
+        <nav style={{ display: "flex", alignItems: "center", gap: 28 }} className="hdr-nav">
+          <a href="#board" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>JOB_LOG</a>
+          <a href="#log" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>NEW_JOB</a>
+          <a href="#foreman" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>AGENT_NODE</a>
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "flex-end" }}>
