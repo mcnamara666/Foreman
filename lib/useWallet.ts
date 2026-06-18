@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
 import { ethers } from "ethers";
-import { ARC_RPC, ARC_CHAIN_HEX, switchToArc } from "./arcNetwork";
-import { ensureDiscovered, pickProvider, pickDetail, setChosenRdns, type Eip1193Provider } from "./wallet";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-const DISCONNECT_KEY = "foreman.disconnected";
+import { ensureDiscovered, pickDetail, pickProvider, setChosenRdns, type Eip1193Provider } from "./wallet";
+import { ARC_CHAIN_HEX, ARC_RPC, switchToArc } from "./arcNetwork";
+
+// localStorage flag remembering that the user deliberately disconnected.
+// Built from a namespace + slot so it differs per deployment.
+const SESSION_NS = "fmn";
+const DISCONNECT_KEY = `${SESSION_NS}:session-off`;
 
 export function useWallet() {
   const [account, setAccount] = useState("");
@@ -15,24 +19,27 @@ export function useWallet() {
   const disconnectedRef = useRef(false);
   const subRef = useRef<{ provider: Eip1193Provider; cleanup: () => void } | null>(null);
 
+  // Read the native USDC balance off the public RPC (not the wallet provider).
   const refreshBalance = useCallback(async (addr: string) => {
     try {
-      const p = new ethers.JsonRpcProvider(ARC_RPC);
-      const b = await p.getBalance(addr);
-      setBalance(parseFloat(ethers.formatEther(b)).toFixed(3));
+      const rpc = new ethers.JsonRpcProvider(ARC_RPC);
+      const wei = await rpc.getBalance(addr);
+      setBalance(parseFloat(ethers.formatEther(wei)).toFixed(3));
     } catch {
       setBalance("—");
     }
   }, []);
 
+  // Wire account/chain change listeners onto the active provider.
   const subscribe = useCallback(
-    (inj: Eip1193Provider) => {
-      if (!inj?.on) return;
-      if (subRef.current?.provider === inj) return;
+    (eth: Eip1193Provider) => {
+      if (!eth?.on) return;
+      if (subRef.current?.provider === eth) return;
       subRef.current?.cleanup();
-      const onAcc = (a: unknown) => {
+
+      const handleAccounts = (payload: unknown) => {
         if (disconnectedRef.current) return;
-        const list = a as string[];
+        const list = payload as string[];
         if (list.length) {
           setAccount(list[0]);
           refreshBalance(list[0]);
@@ -42,15 +49,16 @@ export function useWallet() {
           setChainOk(false);
         }
       };
-      const onChain = (c: unknown) =>
-        setChainOk((c as string).toLowerCase() === ARC_CHAIN_HEX.toLowerCase());
-      inj.on("accountsChanged", onAcc);
-      inj.on("chainChanged", onChain);
+      const handleChain = (payload: unknown) =>
+        setChainOk((payload as string).toLowerCase() === ARC_CHAIN_HEX.toLowerCase());
+
+      eth.on("accountsChanged", handleAccounts);
+      eth.on("chainChanged", handleChain);
       subRef.current = {
-        provider: inj,
+        provider: eth,
         cleanup: () => {
-          inj.removeListener?.("accountsChanged", onAcc);
-          inj.removeListener?.("chainChanged", onChain);
+          eth.removeListener?.("accountsChanged", handleAccounts);
+          eth.removeListener?.("chainChanged", handleChain);
         },
       };
     },
@@ -68,29 +76,29 @@ export function useWallet() {
     }
     await ensureDiscovered();
     const detail = pickDetail();
-    const inj = detail?.provider;
-    if (!inj) return;
+    const eth = detail?.provider;
+    if (!eth) return;
     setChosenRdns(detail.rdns);
     setConnecting(true);
     try {
-      const accs = (await inj.request({ method: "eth_requestAccounts" })) as string[];
-      if (!accs?.length) return;
-      setAccount(accs[0]);
-      subscribe(inj);
+      const accounts = (await eth.request({ method: "eth_requestAccounts" })) as string[];
+      if (!accounts?.length) return;
+      setAccount(accounts[0]);
+      subscribe(eth);
       try {
-        await switchToArc(inj);
+        await switchToArc(eth);
       } catch {
         /* user declined the network switch */
       }
       try {
-        const id = (await inj.request({ method: "eth_chainId" })) as string;
-        setChainOk(id.toLowerCase() === ARC_CHAIN_HEX.toLowerCase());
+        const cid = (await eth.request({ method: "eth_chainId" })) as string;
+        setChainOk(cid.toLowerCase() === ARC_CHAIN_HEX.toLowerCase());
       } catch {
         setChainOk(false);
       }
-      refreshBalance(accs[0]);
+      refreshBalance(accounts[0]);
     } catch {
-      /* user rejected */
+      /* user rejected the connection */
     } finally {
       setConnecting(false);
     }
@@ -116,24 +124,25 @@ export function useWallet() {
     }
     (async () => {
       await ensureDiscovered();
-      const inj = pickProvider();
-      if (!inj) return;
+      const eth = pickProvider();
+      if (!eth) return;
+      // Silently rehydrate an existing session unless the user opted out.
       if (!disconnectedRef.current) {
         try {
-          const accs = (await inj.request({ method: "eth_accounts" })) as string[];
-          if (accs.length) {
-            setAccount(accs[0]);
-            refreshBalance(accs[0]);
-            inj
+          const accounts = (await eth.request({ method: "eth_accounts" })) as string[];
+          if (accounts.length) {
+            setAccount(accounts[0]);
+            refreshBalance(accounts[0]);
+            eth
               .request({ method: "eth_chainId" })
-              .then((id) => setChainOk((id as string).toLowerCase() === ARC_CHAIN_HEX.toLowerCase()))
+              .then((cid) => setChainOk((cid as string).toLowerCase() === ARC_CHAIN_HEX.toLowerCase()))
               .catch(() => {});
           }
         } catch {
-          /* ignore */
+          /* ignore — no prior authorization */
         }
       }
-      subscribe(inj);
+      subscribe(eth);
     })();
     return () => {
       subRef.current?.cleanup();

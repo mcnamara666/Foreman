@@ -18,15 +18,22 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  async function copy() {
+  // Short forms of the active address — one for the pill, one for the panel.
+  const pillAddr = account ? `${account.slice(0, 5)}…${account.slice(-4)}` : "";
+  const fullAddr = account ? `${account.slice(0, 13)}…${account.slice(-6)}` : "";
+
+  const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(account);
       setCopied(true);
       setTimeout(() => setCopied(false), 1400);
     } catch {
-      /* clipboard blocked */
+      /* clipboard unavailable */
     }
-  }
+  };
+
+  const toggleMenu = () => setOpen((prev) => !prev);
+  const closeMenu = () => setOpen(false);
 
   return (
     <header
@@ -68,12 +75,13 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
           {account ? (
             <div style={{ position: "relative" }}>
               <button
-                onClick={() => setOpen((o) => !o)}
+                type="button"
+                onClick={toggleMenu}
                 className="btn btn--ghost btn--sm"
                 style={{ paddingLeft: 13 }}
               >
                 <span className="dot" style={{ background: chainOk ? "var(--lime)" : "var(--coral)" }} />
-                <span style={{ fontVariantNumeric: "tabular-nums" }}>{account.slice(0, 5)}…{account.slice(-4)}</span>
+                <span style={{ fontVariantNumeric: "tabular-nums" }}>{pillAddr}</span>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.15s ease", opacity: 0.7 }}>
                   <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -81,11 +89,11 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
 
               {open && (
                 <>
-                  <div onClick={() => setOpen(false)} style={{ position: "fixed", inset: 0, zIndex: 60 }} />
+                  <div onClick={closeMenu} style={{ position: "fixed", inset: 0, zIndex: 60 }} />
                   <div className="panel" style={{ position: "absolute", top: "calc(100% + 9px)", right: 0, zIndex: 61, minWidth: 248, overflow: "hidden", borderRadius: 18, boxShadow: "0 22px 50px -16px rgba(0,0,0,0.6)" }}>
                     <div style={{ padding: "15px 16px" }}>
                       <div className="label" style={{ marginBottom: 6 }}>Wallet</div>
-                      <div className="num" style={{ fontSize: 14 }}>{account.slice(0, 13)}…{account.slice(-6)}</div>
+                      <div className="num" style={{ fontSize: 14 }}>{fullAddr}</div>
                       <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>{balance || "0"} USDC</div>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderTop: "1px solid var(--line)", fontSize: 13 }}>
@@ -100,16 +108,21 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
                         </button>
                       )}
                     </div>
-                    <button className="menu-item" onClick={copy}>{copied ? "Copied ✓" : "Copy address"}</button>
-                    <a className="menu-item" href={`${ARCSCAN}/address/${account}`} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>View on ArcScan ↗</a>
-                    <button className="menu-item danger" onClick={() => { setOpen(false); onDisconnect(); }}>Disconnect</button>
+                    <button className="menu-item" onClick={handleCopy}>{copied ? "Copied ✓" : "Copy address"}</button>
+                    <a className="menu-item" href={`${ARCSCAN}/address/${account}`} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>View on ArcScan ↗</a>
+                    <button className="menu-item danger" onClick={() => { closeMenu(); onDisconnect(); }}>Disconnect</button>
                   </div>
                 </>
               )}
             </div>
           ) : (
-            <button onClick={onConnect} disabled={connecting} className="btn btn--lime btn--sm">
-              {connecting ? "Connecting…" : "Connect wallet"}
+            <button
+              type="button"
+              onClick={onConnect}
+              disabled={connecting}
+              className="btn btn--lime btn--sm"
+            >
+              {connecting ? "Linking up…" : "Link wallet"}
             </button>
           )}
         </div>
