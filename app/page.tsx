@@ -243,7 +243,7 @@ export default function Home() {
 
       {/* hero — the job ticket */}
       <section style={{ ...wrap, paddingTop: "clamp(34px, 5vw, 64px)" }}>
-        <div className="grid-main rise">
+        <div className="grid-main hoist">
           <div className="blob blob--hero" style={{ padding: 0, overflow: "hidden" }}>
             <div className="hazard" aria-hidden="true" />
             <div style={{ padding: "clamp(28px, 4vw, 46px)" }}>

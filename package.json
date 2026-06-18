@@ -9,19 +9,19 @@
     "compile": "node scripts/compile.js"
   },
   "dependencies": {
-    "@vercel/blob": "^2.4.1",
-    "ethers": "^6.16.0",
     "next": "16.2.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "ethers": "^6.16.0",
+    "@vercel/blob": "~2.4.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "typescript": "^5.6.0",
+    "@types/node": "~20.17.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "solc": "^0.8.35",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^4",
+    "solc": "^0.8.35"
   }
 }

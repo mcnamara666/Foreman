@@ -111,9 +111,9 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
                         </button>
                       )}
                     </div>
-                    <button className="menu-item" onClick={handleCopy}>{copied ? "Copied ✓" : "Copy address"}</button>
-                    <a className="menu-item" href={`${ARCSCAN}/address/${account}`} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>View on ArcScan ↗</a>
-                    <button className="menu-item danger" onClick={() => { closeMenu(); onDisconnect(); }}>Clock off (disconnect)</button>
+                    <button className="docket-line" onClick={handleCopy}>{copied ? "Copied ✓" : "Copy address"}</button>
+                    <a className="docket-line" href={`${ARCSCAN}/address/${account}`} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>View on ArcScan ↗</a>
+                    <button className="docket-line danger" onClick={() => { closeMenu(); onDisconnect(); }}>Clock off (disconnect)</button>
                   </div>
                 </>
               )}
