@@ -1,24 +1,16 @@
 export default function Logo({ size = 30 }: { size?: number }) {
-  // Bespoke "system node" mark: a hexagonal ops node with a green
-  // signal core that traces a sign-off check. Line-style, no tile.
+  // Bespoke construction mark: a foreman's hard hat with a
+  // sign-off check stamped across the brim. Solid, stencil-flat.
   return (
     <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <path
-        d="M16 2.6 27 9v14L16 29.4 5 23V9z"
-        stroke="rgba(255,255,255,0.32)"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M10.2 16.4 14.4 20.6 22 12.2"
-        stroke="var(--acc)"
-        strokeWidth="2.2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <circle cx="16" cy="16" r="1.7" fill="var(--acc)" opacity="0.85">
-        <animate attributeName="opacity" values="0.85;0.3;0.85" dur="2.4s" repeatCount="indefinite" />
-      </circle>
+      {/* hard hat shell */}
+      <path d="M5 21a11 11 0 0 1 22 0z" fill="var(--acc)" stroke="var(--ink)" strokeWidth="1.6" strokeLinejoin="round" />
+      {/* centre ridge */}
+      <path d="M16 9.6v3.4M13 13c0-2 6-2 6 0" stroke="var(--ink)" strokeWidth="1.5" strokeLinecap="round" />
+      {/* brim */}
+      <rect x="3" y="20.8" width="26" height="3.4" rx="1.3" fill="var(--acc)" stroke="var(--ink)" strokeWidth="1.6" />
+      {/* sign-off check on the brim */}
+      <path d="M11 22.5l2.1 2.1L19 18.8" stroke="var(--ink)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }

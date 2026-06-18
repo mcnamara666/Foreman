@@ -1,51 +1,58 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   Foreman — SYSTEM OPERATIONS board
-   Nodum-glass aesthetic: near-black ground, frosted translucent
-   glass panels, light Onest headline, UPPERCASE mono labels,
-   cool grey + a restrained green accent.
+   Foreman — JOB TICKET / work-docket
+   A printed site daybook: kraft + concrete paper ground, asphalt
+   ink, hi-vis HAZARD AMBER accent, hazard-tape edges, perforated
+   ticket stubs, condensed stencil signage and a typewriter docket
+   mono. A foreman's clipboard you stamp and sign off.
    ────────────────────────────────────────────────────────────── */
 
 :root {
-  /* ground */
-  --bg: #07090c;
-  --bg-2: #0a0d12;
+  /* ground — concrete + kraft paper */
+  --bg: #e7e2d6;          /* concrete / kraft paper */
+  --bg-2: #ded8c9;
+  --paper: #f6f2e8;       /* clean docket paper */
+  --paper-2: #efe9da;     /* manila card */
+  --kraft: #d9cbab;       /* kraft envelope brown */
 
-  /* glass */
-  --glass: rgba(255, 255, 255, 0.045);
-  --glass-2: rgba(255, 255, 255, 0.028);
-  --glass-strong: rgba(255, 255, 255, 0.07);
-  --hairline: rgba(255, 255, 255, 0.08);
-  --hairline-2: rgba(255, 255, 255, 0.05);
+  /* ink — asphalt black */
+  --ink: #1b1916;
+  --ink-2: #3a352e;
 
-  /* text — two-tone */
-  --text: #eef1f5;
-  --text-soft: #b9c2cf;
-  --muted: #6f7a8a;
-  --faint: #4b5564;
+  /* text */
+  --text: #1b1916;
+  --text-soft: #4a443a;
+  --muted: #7a7264;
+  --faint: #a59c8a;
 
-  /* restrained green accent */
-  --acc: #3ee08a;
-  --acc-soft: #6ff3ad;
-  --acc-deep: #1c7d4d;
-  --acc-glow: rgba(62, 224, 138, 0.32);
-  --acc-tint: rgba(62, 224, 138, 0.1);
+  /* hi-vis HAZARD AMBER accent */
+  --acc: #f0a000;         /* hazard amber */
+  --acc-soft: #ffb71f;
+  --acc-deep: #b46f00;
+  --acc-glow: rgba(240, 160, 0, 0.4);
+  --acc-tint: rgba(240, 160, 0, 0.16);
 
-  /* status */
-  --warn: #f4b860;
-  --coral: #ff7a6b;
+  /* sign-off green stamp + alert red */
+  --stamp: #1f7a3d;       /* "PAID" stamp green */
+  --stamp-ink: rgba(31, 122, 61, 0.92);
+  --warn: #c47b12;
+  --coral: #b8331f;       /* alert / rejected red */
 
-  /* legacy token aliases — kept so inline var() refs in markup
-     resolve into the new dark-glass palette without touching logic */
+  /* rules / hairlines on paper */
+  --hairline: rgba(27, 25, 22, 0.16);
+  --hairline-2: rgba(27, 25, 22, 0.09);
+  --rule: rgba(27, 25, 22, 0.28);
+
+  /* legacy token aliases — kept so any inline var() refs in markup
+     resolve into the new docket palette without touching logic */
   --lime: var(--acc);
   --lime-deep: var(--acc-deep);
-  --ink: #07090c;          /* "ink" foreground on the accent */
-  --cream: var(--text);
-  --cream-2: rgba(255, 255, 255, 0.06);
-  --green: var(--bg);
-  --green-deep: rgba(255, 255, 255, 0.025);
-  --green-soft: var(--glass);
+  --cream: var(--paper);
+  --cream-2: rgba(27, 25, 22, 0.06);
+  --green: var(--ink);
+  --green-deep: var(--paper-2);
+  --green-soft: var(--paper);
   --line: var(--hairline);
   --line-cream: var(--hairline-2);
 }
@@ -71,33 +78,35 @@ body {
   font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
-  letter-spacing: -0.005em;
+  letter-spacing: 0;
   position: relative;
 }
 
-/* ── ambient ground: soft green aurora + grain ─────────────── */
+/* ── ambient ground: graph-paper grid + paper grain ─────────── */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -2;
-  background:
-    radial-gradient(900px 520px at 78% -8%, rgba(62, 224, 138, 0.1), transparent 60%),
-    radial-gradient(760px 520px at 8% 4%, rgba(90, 120, 160, 0.08), transparent 62%),
-    radial-gradient(1000px 700px at 50% 116%, rgba(62, 224, 138, 0.06), transparent 60%),
-    linear-gradient(180deg, var(--bg), var(--bg-2) 60%, var(--bg));
   pointer-events: none;
+  background-color: var(--bg);
+  /* faint engineer's graph-paper grid */
+  background-image:
+    linear-gradient(rgba(27, 25, 22, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(27, 25, 22, 0.045) 1px, transparent 1px),
+    radial-gradient(1100px 700px at 88% -6%, rgba(240, 160, 0, 0.1), transparent 60%);
+  background-size: 26px 26px, 26px 26px, 100% 100%;
 }
-/* feTurbulence grain, baked into a data-URI so nothing can break */
+/* feTurbulence paper grain, baked into a data-URI */
 body::after {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  opacity: 0.4;
+  opacity: 0.5;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
 }
 
 button {
@@ -109,96 +118,162 @@ a {
 
 ::selection {
   background: var(--acc);
-  color: #04130b;
+  color: var(--ink);
 }
 
 ::-webkit-scrollbar {
-  width: 11px;
-  height: 11px;
+  width: 13px;
+  height: 13px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: var(--bg-2);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.12);
-  border-radius: 99px;
-  border: 3px solid var(--bg);
+  background: var(--ink);
+  border-radius: 0;
+  border: 3px solid var(--bg-2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--acc-deep);
 }
 
 /* ── type ─────────────────────────────────────────────────── */
 .display {
-  font-family: var(--font-sans), sans-serif;
-  font-weight: 300;
-  letter-spacing: -0.035em;
-  line-height: 1.0;
-  color: var(--text);
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  line-height: 0.94;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 .head {
-  font-family: var(--font-sans), sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--text);
+  font-family: var(--font-display), "Arial Narrow", sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--ink);
 }
 .num {
   font-family: var(--font-mono), ui-monospace, monospace;
-  font-weight: 500;
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--ink);
 }
 .label {
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
 }
 
-/* ── surfaces — frosted glass ─────────────────────────────── */
-.panel {
-  background: var(--glass);
-  border: 1px solid var(--hairline);
-  border-radius: 20px;
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 24px 60px -32px rgba(0, 0, 0, 0.8);
+/* ── hazard tape — diagonal amber/black caution stripe ─────── */
+.hazard {
+  height: 12px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--ink) 0,
+    var(--ink) 13px,
+    var(--acc) 13px,
+    var(--acc) 26px
+  );
 }
-/* a secondary surface used for "card" (job telemetry tiles) */
+.hazard--thin { height: 7px; }
+
+/* ── surfaces — docket paper cards ────────────────────────── */
+/* .panel = a printed work-order docket: paper, hard ink border,
+   blunt corners, drop shadow like a sheet on a clipboard */
+.panel {
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: 4px 5px 0 0 rgba(27, 25, 22, 0.16);
+  position: relative;
+}
+/* .card = a manila job card on the site board */
 .card {
-  background: var(--glass-2);
+  background: var(--paper);
   color: var(--text);
-  border: 1px solid var(--hairline);
-  border-radius: 18px;
+  border: 2px solid var(--ink);
+  border-radius: 2px;
   overflow: hidden;
-  backdrop-filter: blur(14px) saturate(120%);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.04), 0 20px 48px -30px rgba(0, 0, 0, 0.8);
-  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 3px 4px 0 0 rgba(27, 25, 22, 0.15);
+  transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.2s ease;
 }
 .card:hover {
-  transform: translateY(-3px);
-  border-color: rgba(62, 224, 138, 0.3);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 30px 60px -28px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(62, 224, 138, 0.08);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 8px 0 0 var(--acc-glow);
 }
-/* "blob" became the accent-edged hero glass slab */
+/* .blob = the headline docket slab — kraft tint + corner clip */
 .blob {
   background:
-    linear-gradient(160deg, rgba(62, 224, 138, 0.1), rgba(255, 255, 255, 0.02) 46%),
-    var(--glass);
+    linear-gradient(168deg, rgba(240, 160, 0, 0.08), transparent 42%),
+    var(--paper);
   color: var(--text);
-  border: 1px solid var(--hairline);
-  border-radius: 24px;
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 30px 70px -34px rgba(0, 0, 0, 0.85);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  box-shadow: 5px 6px 0 0 rgba(27, 25, 22, 0.18);
   position: relative;
 }
 .blob--hero {
-  border-radius: 24px;
+  border-radius: 2px;
+}
+
+/* perforated ticket / tear-off edge — dotted top rule + nibbles */
+.perf {
+  position: relative;
+}
+.perf::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 0;
+  border-top: 2px dashed var(--rule);
+}
+
+/* a kraft/manila tag strip used for ticket headers */
+.docket-strip {
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 14px;
+}
+.docket-strip .label { color: rgba(246, 242, 232, 0.7); }
+
+/* ── rubber SIGNED OFF / PAID stamp ───────────────────────── */
+.stamp {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 6px 12px;
+  border: 2.5px solid var(--stamp-ink);
+  border-radius: 4px;
+  color: var(--stamp-ink);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 0.95;
+  transform: rotate(-7deg);
+  background: rgba(31, 122, 61, 0.05);
+  /* slightly inked / worn edge */
+  box-shadow: inset 0 0 0 1px rgba(31, 122, 61, 0.25);
+  text-align: center;
+}
+.stamp--lg { padding: 9px 18px; }
+.stamp .stamp-sub {
+  font-family: var(--font-mono), monospace;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.18em;
 }
 
 /* ── buttons ──────────────────────────────────────────────── */
@@ -207,135 +282,131 @@ a {
   align-items: center;
   justify-content: center;
   gap: 9px;
-  border: 1px solid var(--hairline);
-  background: var(--glass);
-  color: var(--text);
-  padding: 13px 22px;
-  border-radius: 12px;
-  font-family: var(--font-sans), sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  padding: 12px 22px;
+  border-radius: 2px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   cursor: pointer;
   text-decoration: none;
   line-height: 1;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: transform 0.16s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 3px 3px 0 0 var(--ink);
+  transition: transform 0.12s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.12s ease, background 0.16s ease, color 0.16s ease;
 }
 .btn:hover:not(:disabled) {
-  border-color: rgba(255, 255, 255, 0.2);
-  background: var(--glass-strong);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 0 var(--ink);
 }
 .btn:active:not(:disabled) {
-  transform: translateY(1px);
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 0 var(--ink);
 }
 .btn:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
+  box-shadow: 2px 2px 0 0 rgba(27, 25, 22, 0.4);
 }
-/* primary accent action */
+/* primary hi-vis action */
 .btn--lime {
   background: var(--acc);
-  color: #04130b;
-  border-color: transparent;
-  font-weight: 600;
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 0 var(--ink);
 }
 .btn--lime:hover:not(:disabled) {
   background: var(--acc-soft);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px -12px var(--acc-glow);
+  box-shadow: 4px 4px 0 0 var(--ink);
 }
 .btn--ghost {
-  background: var(--glass);
-  border-color: var(--hairline);
-  color: var(--text-soft);
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+  box-shadow: 2px 2px 0 0 rgba(27, 25, 22, 0.5);
 }
 .btn--ghost:hover:not(:disabled) {
-  color: var(--text);
-  border-color: rgba(255, 255, 255, 0.22);
+  background: var(--kraft);
+  box-shadow: 3px 3px 0 0 rgba(27, 25, 22, 0.6);
 }
-/* "ink" became a quiet outline action on glass */
+/* quiet outline action — used for "endorse" */
 .btn--ink {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--text);
-  border-color: var(--hairline);
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--ink);
 }
 .btn--ink:hover:not(:disabled) {
-  background: rgba(62, 224, 138, 0.12);
-  border-color: rgba(62, 224, 138, 0.35);
-  color: var(--acc-soft);
-  transform: translateY(-2px);
+  background: var(--acc-tint);
 }
 .btn--sm {
   padding: 9px 15px;
-  font-size: 13px;
-  border-radius: 10px;
+  font-size: 13.5px;
 }
 .btn--lg {
-  padding: 16px 28px;
-  font-size: 15px;
-  border-radius: 13px;
+  padding: 15px 28px;
+  font-size: 18px;
 }
 .btn--block {
   width: 100%;
 }
 
-/* ── chips ────────────────────────────────────────────────── */
+/* ── chips / tags — clipped paper tags ────────────────────── */
 .chip {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 5px 11px;
-  border-radius: 8px;
-  border: 1px solid var(--hairline);
-  background: var(--glass);
+  padding: 4px 10px;
+  border-radius: 2px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper-2);
   font-family: var(--font-mono), ui-monospace, monospace;
   font-size: 10.5px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink);
 }
-/* green status chip — "COMPLETED" */
+/* signed-off / paid tag */
 .chip--lime {
-  background: rgba(62, 224, 138, 0.12);
-  color: var(--acc-soft);
-  border-color: rgba(62, 224, 138, 0.32);
+  background: rgba(31, 122, 61, 0.14);
+  color: var(--stamp);
+  border-color: var(--stamp);
 }
 .chip--ink {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--paper-2);
   color: var(--text-soft);
-  border-color: var(--hairline);
+  border-color: var(--rule);
 }
 .dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   border-radius: 99px;
   flex-shrink: 0;
 }
 
-/* ── inputs ───────────────────────────────────────────────── */
+/* ── inputs — docket fields, ruled lines ──────────────────── */
 .input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--hairline);
-  border-radius: 11px;
-  padding: 12px 14px;
-  font-family: var(--font-sans), sans-serif;
-  font-size: 14.5px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  padding: 11px 13px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 14px;
   font-weight: 400;
-  color: var(--text);
+  color: var(--ink);
   outline: none;
-  transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+  transition: box-shadow 0.16s ease, background 0.16s ease;
 }
 .input::placeholder {
   color: var(--faint);
 }
 .input:focus {
-  border-color: rgba(62, 224, 138, 0.5);
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 0 3px rgba(62, 224, 138, 0.1);
+  background: #fffdf6;
+  box-shadow: inset 0 0 0 2px var(--acc), 3px 3px 0 0 var(--acc-glow);
 }
 
 /* photo holder */
@@ -343,8 +414,8 @@ a {
   position: relative;
   display: block;
   aspect-ratio: 4 / 3;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 12px;
+  background: var(--kraft);
+  border-radius: 2px;
   overflow: hidden;
 }
 .photo img {
@@ -355,37 +426,36 @@ a {
   object-fit: cover;
 }
 
-/* segmented control */
+/* segmented control — file-tab selector */
 .seg {
   display: inline-flex;
-  gap: 3px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid var(--hairline);
-  border-radius: 11px;
-  padding: 4px;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  gap: 0;
+  background: var(--paper-2);
+  border: 2px solid var(--ink);
+  border-radius: 2px;
+  padding: 3px;
 }
 .seg button {
   border: none;
   background: transparent;
   color: var(--muted);
-  font-family: var(--font-mono), ui-monospace, monospace;
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  padding: 8px 15px;
-  border-radius: 8px;
+  font-family: var(--font-display), sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 7px 16px;
+  border-radius: 1px;
   cursor: pointer;
-  transition: background 0.18s ease, color 0.18s ease;
+  transition: background 0.16s ease, color 0.16s ease;
 }
 .seg button:hover {
-  color: var(--text);
+  color: var(--ink);
 }
 .seg button[data-on="true"] {
-  background: rgba(62, 224, 138, 0.14);
-  color: var(--acc-soft);
-  box-shadow: inset 0 0 0 1px rgba(62, 224, 138, 0.28);
+  background: var(--acc);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1.5px var(--ink);
 }
 
 /* wallet menu item */
@@ -397,22 +467,23 @@ a {
   padding: 12px 15px;
   background: transparent;
   border: none;
-  border-top: 1px solid var(--hairline);
+  border-top: 1.5px solid var(--hairline);
   color: var(--text-soft);
   font-family: var(--font-sans), sans-serif;
   font-size: 13.5px;
-  font-weight: 400;
+  font-weight: 500;
   text-align: left;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.16s ease, color 0.16s ease;
 }
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
+  background: var(--acc-tint);
+  color: var(--ink);
 }
 .menu-item.danger:hover {
   color: var(--coral);
+  background: rgba(184, 51, 31, 0.08);
 }
 
 /* ── motion ───────────────────────────────────────────────── */
@@ -420,11 +491,12 @@ a {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: none; }
 }
-.rise { animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.rise { animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
+/* the foreman's clipboard sways gently */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  0%, 100% { transform: rotate(-1deg) translateY(0); }
+  50% { transform: rotate(-1deg) translateY(-6px); }
 }
 .float { animation: float 6s ease-in-out infinite; }
 
@@ -433,37 +505,46 @@ a {
 }
 .spin { animation: spin 1s linear infinite; }
 
-/* status pulse — green ring */
+/* status pulse — amber ring on the foreman dot */
 @keyframes pulse-dot {
   0%, 100% { box-shadow: 0 0 0 0 var(--acc-glow); }
-  50% { box-shadow: 0 0 0 6px rgba(62, 224, 138, 0); }
+  50% { box-shadow: 0 0 0 6px rgba(240, 160, 0, 0); }
 }
 .live { animation: pulse-dot 2.2s infinite; }
 
-/* telemetry value tick-in on load */
+/* docket value drops onto the page */
 @keyframes tick-in {
-  from { opacity: 0; transform: translateY(6px); filter: blur(4px); }
-  to { opacity: 1; transform: none; filter: blur(0); }
+  from { opacity: 0; transform: translateY(7px); }
+  to { opacity: 1; transform: none; }
 }
-.tick { animation: tick-in 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.tick { animation: tick-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
-/* gentle card float — applied to overlapping system cards */
+/* the headline docket settles with a slight tilt */
 @keyframes drift {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+  0%, 100% { transform: rotate(0.5deg) translateY(0); }
+  50% { transform: rotate(0.5deg) translateY(-5px); }
 }
 .drift { animation: drift 7s ease-in-out infinite; }
 
-/* dashed-flow accent line */
+/* the rubber stamp THUMPS down on sign-off */
+@keyframes stamp-thump {
+  0% { opacity: 0; transform: rotate(-7deg) scale(2.1); }
+  55% { opacity: 1; transform: rotate(-7deg) scale(0.9); }
+  72% { transform: rotate(-7deg) scale(1.06); }
+  100% { opacity: 1; transform: rotate(-7deg) scale(1); }
+}
+.stamp-in { animation: stamp-thump 0.5s cubic-bezier(0.3, 1.4, 0.5, 1) both; }
+
+/* dashed string-line — surveyor's chalk line */
 @keyframes flow {
   to { background-position: -200% 0; }
 }
 .flowline {
-  height: 1px;
-  background-image: repeating-linear-gradient(90deg, var(--acc) 0 8px, transparent 8px 18px);
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--ink) 0 10px, transparent 10px 20px);
   background-size: 200% 100%;
-  opacity: 0.4;
-  animation: flow 8s linear infinite;
+  opacity: 0.5;
+  animation: flow 9s linear infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -483,18 +564,18 @@ a {
 .grid-jobs {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
+  gap: 18px;
 }
 .grid-main {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 18px;
+  gap: 20px;
   align-items: start;
 }
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
 }
 
 /* bento — asymmetric feature grid */
@@ -502,7 +583,7 @@ a {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: minmax(152px, auto);
-  gap: 14px;
+  gap: 16px;
 }
 .bento .b-hero {
   grid-column: span 2;
@@ -512,7 +593,7 @@ a {
   grid-column: span 3;
 }
 
-/* big clickable photo upload tile */
+/* big clickable photo upload tile — taped-on snapshot slot */
 .tile {
   position: relative;
   display: flex;
@@ -520,17 +601,17 @@ a {
   justify-content: center;
   width: 100%;
   aspect-ratio: 3 / 2;
-  border-radius: 14px;
-  border: 1px dashed rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.025);
+  border-radius: 2px;
+  border: 2px dashed var(--rule);
+  background: var(--kraft);
   cursor: pointer;
   overflow: hidden;
   padding: 0;
-  transition: border-color 0.18s ease, transform 0.14s ease, background 0.18s ease;
+  transition: border-color 0.16s ease, transform 0.12s ease, background 0.16s ease;
 }
 .tile:hover {
-  border-color: rgba(62, 224, 138, 0.5);
-  background: rgba(62, 224, 138, 0.04);
+  border-color: var(--acc-deep);
+  background: var(--paper-2);
 }
 .tile:active {
   transform: scale(0.99);

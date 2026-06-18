@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-  <path d="M16 2.6 27 9v14L16 29.4 5 23V9z" fill="none" stroke="#3ee08a" stroke-width="1.7" stroke-linejoin="round" opacity="0.55"/>
-  <path d="M10.2 16.4 14.4 20.6 22 12.2" fill="none" stroke="#3ee08a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="16" cy="16" r="1.8" fill="#3ee08a"/>
+  <rect width="32" height="32" fill="#1b1916"/>
+  <!-- hard hat shell -->
+  <path d="M5 21a11 11 0 0 1 22 0z" fill="#f0a000"/>
+  <!-- hard hat centre ridge -->
+  <path d="M16 9.5v3.5M13 13c0-2 6-2 6 0" fill="none" stroke="#1b1916" stroke-width="1.6" stroke-linecap="round"/>
+  <!-- brim -->
+  <rect x="3" y="21" width="26" height="3.2" rx="1.2" fill="#f0a000"/>
+  <!-- sign-off check stamped on the brim -->
+  <path d="M11 22.6l2.1 2.1L19 18.9" fill="none" stroke="#1b1916" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

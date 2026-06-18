@@ -41,17 +41,18 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
         position: "sticky",
         top: 0,
         zIndex: 50,
-        background: "rgba(7, 9, 12, 0.62)",
-        backdropFilter: "blur(18px) saturate(130%)",
-        WebkitBackdropFilter: "blur(18px) saturate(130%)",
-        borderBottom: "1px solid var(--hairline)",
+        background: "var(--paper)",
+        borderBottom: "2px solid var(--ink)",
+        boxShadow: "0 3px 0 0 rgba(27,25,22,0.12)",
       }}
     >
+      {/* hazard-tape strip across the very top — site signage */}
+      <div className="hazard hazard--thin" aria-hidden="true" />
       <div
         style={{
           maxWidth: 1200,
           margin: "0 auto",
-          padding: "13px 24px",
+          padding: "12px 24px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -60,15 +61,15 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
         }}
       >
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 11, textDecoration: "none" }}>
-          <Logo size={28} />
-          <span className="display" style={{ fontSize: 21, fontWeight: 600, letterSpacing: "-0.02em" }}>Foreman</span>
-          <span className="label hdr-nav" style={{ fontSize: 9, marginLeft: 4, paddingLeft: 11, borderLeft: "1px solid var(--hairline)" }}>SYSTEM&nbsp;OPS</span>
+          <Logo size={30} />
+          <span className="display" style={{ fontSize: 26, fontWeight: 800, letterSpacing: "0.02em" }}>Foreman</span>
+          <span className="label hdr-nav" style={{ fontSize: 9, marginLeft: 4, paddingLeft: 11, borderLeft: "1.5px solid var(--ink)", color: "var(--acc-deep)" }}>SITE&nbsp;OFFICE</span>
         </Link>
 
-        <nav style={{ display: "flex", alignItems: "center", gap: 28 }} className="hdr-nav">
-          <a href="#board" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>JOB_LOG</a>
-          <a href="#log" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>NEW_JOB</a>
-          <a href="#foreman" className="num" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 12.5, letterSpacing: "0.02em" }}>AGENT_NODE</a>
+        <nav style={{ display: "flex", alignItems: "center", gap: 26 }} className="hdr-nav">
+          <a href="#board" className="head" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 15, letterSpacing: "0.04em" }}>Site&nbsp;log</a>
+          <a href="#log" className="head" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 15, letterSpacing: "0.04em" }}>Log&nbsp;a&nbsp;job</a>
+          <a href="#foreman" className="head" style={{ textDecoration: "none", color: "var(--text-soft)", fontSize: 15, letterSpacing: "0.04em" }}>The&nbsp;Foreman</a>
         </nav>
 
         <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "flex-end" }}>
@@ -80,8 +81,8 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
                 className="btn btn--ghost btn--sm"
                 style={{ paddingLeft: 13 }}
               >
-                <span className="dot" style={{ background: chainOk ? "var(--lime)" : "var(--coral)" }} />
-                <span style={{ fontVariantNumeric: "tabular-nums" }}>{pillAddr}</span>
+                <span className="dot" style={{ background: chainOk ? "var(--stamp)" : "var(--coral)" }} />
+                <span className="num" style={{ fontVariantNumeric: "tabular-nums", textTransform: "none", letterSpacing: 0 }}>{pillAddr}</span>
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" style={{ transform: open ? "rotate(180deg)" : "none", transition: "transform 0.15s ease", opacity: 0.7 }}>
                   <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -90,27 +91,29 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
               {open && (
                 <>
                   <div onClick={closeMenu} style={{ position: "fixed", inset: 0, zIndex: 60 }} />
-                  <div className="panel" style={{ position: "absolute", top: "calc(100% + 9px)", right: 0, zIndex: 61, minWidth: 248, overflow: "hidden", borderRadius: 18, boxShadow: "0 22px 50px -16px rgba(0,0,0,0.6)" }}>
-                    <div style={{ padding: "15px 16px" }}>
-                      <div className="label" style={{ marginBottom: 6 }}>Wallet</div>
-                      <div className="num" style={{ fontSize: 14 }}>{fullAddr}</div>
-                      <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 6 }}>{balance || "0"} USDC</div>
+                  <div className="panel" style={{ position: "absolute", top: "calc(100% + 9px)", right: 0, zIndex: 61, minWidth: 250, overflow: "hidden" }}>
+                    <div className="docket-strip">
+                      <span className="label">Your toolbox</span>
                     </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderTop: "1px solid var(--line)", fontSize: 13 }}>
-                      <span style={{ color: "var(--muted)" }}>Network</span>
+                    <div style={{ padding: "14px 16px" }}>
+                      <div className="num" style={{ fontSize: 14 }}>{fullAddr}</div>
+                      <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 6 }}>{balance || "0"} USDC on hand</div>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", borderTop: "1.5px solid var(--hairline)", fontSize: 13 }}>
+                      <span style={{ color: "var(--muted)" }}>Site</span>
                       {chainOk ? (
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 600 }}>
-                          <span className="dot" style={{ background: "var(--lime)" }} /> ARC Testnet
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 700 }}>
+                          <span className="dot" style={{ background: "var(--stamp)" }} /> ARC Testnet
                         </span>
                       ) : (
                         <button onClick={() => switchToArc().catch(() => {})} style={{ background: "none", border: "none", color: "var(--coral)", fontWeight: 700, cursor: "pointer", fontFamily: "inherit", fontSize: 13 }}>
-                          Wrong — switch ↗
+                          Wrong site — switch ↗
                         </button>
                       )}
                     </div>
                     <button className="menu-item" onClick={handleCopy}>{copied ? "Copied ✓" : "Copy address"}</button>
                     <a className="menu-item" href={`${ARCSCAN}/address/${account}`} target="_blank" rel="noopener noreferrer" onClick={closeMenu}>View on ArcScan ↗</a>
-                    <button className="menu-item danger" onClick={() => { closeMenu(); onDisconnect(); }}>Disconnect</button>
+                    <button className="menu-item danger" onClick={() => { closeMenu(); onDisconnect(); }}>Clock off (disconnect)</button>
                   </div>
                 </>
               )}
@@ -122,7 +125,7 @@ export default function Header({ account, balance, chainOk, connecting, onConnec
               disabled={connecting}
               className="btn btn--lime btn--sm"
             >
-              {connecting ? "Linking up…" : "Link wallet"}
+              {connecting ? "Clocking in…" : "Clock in"}
             </button>
           )}
         </div>

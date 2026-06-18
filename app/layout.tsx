@@ -1,31 +1,41 @@
 import type { Metadata } from "next";
-import { Onest, Fragment_Mono } from "next/font/google";
+import { Saira_Condensed, Public_Sans, Courier_Prime } from "next/font/google";
 import "./globals.css";
 
-const inter = Onest({
+// Condensed industrial signage — site notices, stencilled headings.
+const display = Saira_Condensed({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+// Sturdy, workmanlike body copy.
+const body = Public_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const mono = Fragment_Mono({
+// Typewriter docket mono — for numbers, docket refs, addresses.
+const mono = Courier_Prime({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "700"],
   variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Foreman — your work, signed off and paid, on ARC",
+  title: "Foreman — log the job, get signed off, get paid · on ARC",
   description:
-    "Log a finished job with before/after photos. An autonomous agent on ARC signs it off and pays you a USDC bounty — no human in the loop. Clients endorse your work in USDC.",
-  keywords: "Foreman, ARC, USDC, agent, agentic payments, trades, builder, portfolio, proof of work, web3",
+    "Log a finished job with before/after photos. The Foreman — an autonomous agent on ARC — checks your work, signs the docket and pays your USDC bounty. No invoice, no waiting. Mates can endorse a good job in USDC.",
+  keywords: "Foreman, ARC, USDC, agent, agentic payments, trades, builder, job ticket, sign-off, proof of work, web3",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   );
